@@ -1,21 +1,76 @@
-1. feladat
-Olvasd be az info.txt fájl tartalmát
-2. feladat
-Ki: A szöveg ? szóból áll.
-3. feladat
-Ki: A szöveg visszafelé: ?
-4. feladat
-Olvasd listába az egyes szavakat 
-szöveg.split()
-Ki: Írasd ki a listát
-5. feladat
-Ki: A leghosszabb szó a ? (?karakterből áll)
+#Alprogramok
 
-+1. feladat
-Ki: 
-A teljes szövegre:
-Magánhangzók száma: ?
-Mássalhangzók száma: ?
-Az egyes szavakra:
-1. szó: mh: 3db; mássalh: 4db
-2. szó: ...
+# 1. feladat
+# Olvasd be az info.txt fájl tartalmát
+def beolvasas():
+    lista = []
+    with open ("info.txt","r",encoding="UTF-8") as fm:
+        for sor in fm:
+            lista.append(input(sor.strip()))
+    return lista
+
+
+# 2. feladat
+# Ki: A szöveg ? szóból áll.
+def szo_hossza(szoveg):
+    szavak_szama = 0
+    szokoz = False
+    for karakter in szoveg:
+        if karakter != ' ' and not szokoz:
+            szavak_szama += 1
+            szokoz = True
+        elif karakter == ' ':
+            szokoz = False
+    return szavak_szama
+
+# 3. feladat
+# Ki: A szöveg visszafelé: ?
+def visszafele_szovegek(szoveg):
+    visszafele = ""
+    for i in range(len(szoveg)-1, -1, -1):
+        visszafele += szoveg[i]
+    return visszafele
+
+# 4. feladat
+# Olvasd listába az egyes szavakat 
+# szöveg.split()
+# Ki: Írasd ki a listát
+def szavak_listaba(szoveg):
+    szavak = szoveg.split()
+    return szavak
+
+# 5. feladat
+# Ki: A leghosszabb szó a ? (?karakterből áll)
+def leghosszabb_szo(szoveg):
+    legnagyobb_hossz = 0
+    leghosszabb_szo = ""
+    jelenlegi_szo = ""
+    for karakter in szoveg:
+        if karakter == " ":
+            if len(jelenlegi_szo) > legnagyobb_hossz:
+                legnagyobb_hossz = len(jelenlegi_szo)
+                leghosszabb_szo = jelenlegi_szo
+            jelenlegi_szo = "" 
+        else:
+            jelenlegi_szo += karakter
+    if len(jelenlegi_szo) > legnagyobb_hossz:
+        leghosszabb_szo = jelenlegi_szo
+    return leghosszabb_szo, legnagyobb_hossz
+
+def kiir(szb_all, sz_vissza, l_olvasas, hossz_szo):
+    print(f"A szöveg {szb_all} áll.")
+    print(f"A szöveg visszafele: {sz_vissza}")
+    print(f"Listába olvasás: {l_olvasas}")
+    print(f"A leghoszabb szó: {hossz_szo}")
+
+#input
+szoveg = beolvasas()
+
+#szamítas
+szobol_all = szo_hossza(szoveg)
+szoveg_visszafele = visszafele_szovegek(szoveg)
+listaba_olvasas = szavak_listaba(szoveg)
+hossz_szo = leghosszabb_szo(szoveg)
+
+#output
+kiir(szobol_all, szoveg_visszafele, listaba_olvasas, hossz_szo)
